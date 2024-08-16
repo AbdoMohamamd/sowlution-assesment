@@ -52,47 +52,68 @@
 }
 
 .App-counter {
-  margin: 10px 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #ccc;
+}
+
+.App-navigation {
+  margin-bottom: 20px;
+}
+
+.App-nav-button {
+  background-color: #61dafb;
+  border: none;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 18px;
+}
+
+.App-nav-button:hover {
+  background-color: #21a1f1;
+}
+
+.App-articles {
+  max-width: 100%;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.App-article {
+  text-align: left;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+.App-article.highlighted {
+  border-color: #ffeb3b;
+}
+
+.App-article h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.App-article p {
   font-size: 18px;
   color: #333;
 }
 
-.App-navigation {
-  margin: 20px 0;
+small {
+  display: block;
+  margin-top: 10px;
+  color: #777;
 }
 
-.App-nav-button {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  margin: 0 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.App-nav-button:hover {
-  background-color: #45a049;
-}
-
-.App-articles {
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.App-article {
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.App-article.has-highlight {
-  border-left: 4px solid #ffeb3b;
-}
-
-.App-article mark {
-  background-color: #ffeb3b;
+.highlight {
+  background-color: yellow;
   color: black;
 }
 

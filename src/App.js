@@ -3,8 +3,7 @@ import "./App.css";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [highlightedIndex, setHighlightedIndex] = useState(null);
-  const [highlightedWords, setHighlightedWords] = useState([]);
+  const [articleCount, setArticleCount] = useState(0);
   const articlesRef = useRef([]);
 
   const articles = [
@@ -65,43 +64,13 @@ const App = () => {
   ];
 
   useEffect(() => {
-    // Find all highlighted words
-    const newHighlightedWords = [];
-    articles.forEach((article, articleIndex) => {
-      if (
+    const filteredArticles = articles.filter(
+      (article) =>
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         article.description.toLowerCase().includes(searchTerm.toLowerCase())
-      ) {
-        const words = [];
-
-        const addHighlightedWord = (text, type) => {
-          let startIndex = 0;
-          let searchTermLower = searchTerm.toLowerCase();
-          while (
-            (startIndex = text
-              .toLowerCase()
-              .indexOf(searchTermLower, startIndex)) > -1
-          ) {
-            words.push({
-              start: startIndex,
-              end: startIndex + searchTerm.length,
-              type,
-            });
-            startIndex += searchTerm.length;
-          }
-        };
-
-        addHighlightedWord(article.title, "title");
-        addHighlightedWord(article.description, "description");
-
-        if (words.length > 0) {
-          newHighlightedWords.push({ articleIndex, words });
-        }
-      }
-    });
-    setHighlightedWords(newHighlightedWords);
-    setHighlightedIndex(0); // Start from the first highlighted word
-  }, [searchTerm, articles]);
+    );
+    setArticleCount(filteredArticles.length);
+  }, [searchTerm]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -109,22 +78,13 @@ const App = () => {
 
   const handleClearSearch = () => {
     setSearchTerm("");
-    setHighlightedIndex(null);
   };
 
-  const highlightText = (text, type) => {
+  const highlightText = (text) => {
     if (!searchTerm) return text;
-    const highlighted = highlightedWords.flatMap((h) =>
-      h.words.filter((w) => w.type === type)
-    );
     const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
     return parts.map((part, index) =>
-      highlighted.some(
-        (h) =>
-          part.toLowerCase() === searchTerm.toLowerCase() &&
-          h.start <= index &&
-          h.end >= index
-      ) ? (
+      part.toLowerCase() === searchTerm.toLowerCase() ? (
         <mark key={index} className="highlight">
           {part}
         </mark>
@@ -132,29 +92,6 @@ const App = () => {
         part
       )
     );
-  };
-
-  const scrollToHighlightedWord = (direction) => {
-    const currentHighlighted = highlightedWords[highlightedIndex];
-    if (!currentHighlighted) return;
-
-    let newIndex = highlightedIndex;
-    if (direction === "next") {
-      newIndex = (highlightedIndex + 1) % highlightedWords.length;
-    } else {
-      newIndex =
-        (highlightedIndex - 1 + highlightedWords.length) %
-        highlightedWords.length;
-    }
-
-    const nextHighlighted = highlightedWords[newIndex];
-    if (nextHighlighted) {
-      setHighlightedIndex(newIndex);
-      const element = articlesRef.current[nextHighlighted.articleIndex];
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }
   };
 
   return (
@@ -174,25 +111,7 @@ const App = () => {
           </button>
         </div>
         <div className="App-counter">
-          {highlightedWords.length}{" "}
-          {highlightedWords.length === 1
-            ? "highlighted word"
-            : "highlighted words"}{" "}
-          found
-        </div>
-        <div className="App-navigation">
-          <button
-            onClick={() => scrollToHighlightedWord("prev")}
-            className="App-nav-button"
-          >
-            ◀
-          </button>
-          <button
-            onClick={() => scrollToHighlightedWord("next")}
-            className="App-nav-button"
-          >
-            ▶
-          </button>
+          {articleCount} {articleCount === 1 ? "article" : "articles"} found
         </div>
         <div className="App-articles">
           {articles.map((article, index) => (
@@ -201,33 +120,15 @@ const App = () => {
               ref={(el) => {
                 if (el) articlesRef.current[index] = el;
               }}
-              className={`App-article ${
-                highlightedWords.some((h) => h.articleIndex === index)
-                  ? "has-highlight"
-                  : ""
-              }`}
+              className="App-article"
             >
-              <h2>{highlightText(article.title, "title")}</h2>
-              <p>{highlightText(article.description, "description")}</p>
+              <h2>{highlightText(article.title)}</h2>
+              <p>{highlightText(article.description)}</p>
               <small>{article.date}</small>
             </div>
           ))}
         </div>
       </header>
-      <div className="App-fixed-arrows">
-        <button
-          onClick={() => scrollToHighlightedWord("prev")}
-          className="App-nav-button"
-        >
-          ◀
-        </button>
-        <button
-          onClick={() => scrollToHighlightedWord("next")}
-          className="App-nav-button"
-        >
-          ▶
-        </button>
-      </div>
     </div>
   );
 };
