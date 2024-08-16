@@ -1,38 +1,109 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f0f2f5;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: auto;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.App-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-search-input {
+  padding: 15px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  margin-right: 10px;
+}
+
+.App-clear-button {
+  background-color: #ff4d4d;
+  border: none;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.App-clear-button:hover {
+  background-color: #e60000;
+}
+
+.App-counter {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.App-navigation {
+  margin: 20px 0;
+}
+
+.App-nav-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.App-nav-button:hover {
+  background-color: #45a049;
+}
+
+.App-articles {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.App-article {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.App-article.has-highlight {
+  border-left: 4px solid #ffeb3b;
+}
+
+.App-article mark {
+  background-color: #ffeb3b;
+  color: black;
+}
+
+.App-fixed-arrows {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.App-fixed-arrows .App-nav-button {
+  margin: 0 10px;
 }
